@@ -1,2 +1,20 @@
-# Alexa Final Project Design
+# Alexa-Final-Project-Design
 
+This alexa skill is defined to play a word scramble game with the user! 
+
+    This Alexa skill is open when prompted to buy the user and then sets all global variables to zero just incase they were not already. 
+Once this is done it explains to the user how to play and asks if they are ready. When the user says "yes" it brings them to the
+wordOne intent which picks a random spot in an array full of possible words to be scrambled and puts the word into an array for holding 
+so it can be comparerd to later on. After this it gets sent into a method which splits up the string into an array of letters. Then that 
+array gets sent into another method which randomizes where the letters are in the string and returns it into the wordOne intent function.
+Then this intent tells the user what there scramble letters are and awaits the answer. This answer gets assigned to the slot value and 
+calls the next intent wordOneAnswer. This intent sends the users answer into a method which compares the users answer to the answer held 
+at the particular index in the wordDone array and adds to the score accordingly. Next the wordOneAnswer intent runs a method which checks
+if the game is over and who one. Then it builds the alexa response accordingly and emits it to the user. If the user decidews to play again
+they will prompt the first 'play' intent to fire. 
+
+    In the Alexa developer side of things there are seven intents, four of which are built in handelers. The first play intent fires with 
+the user saying lets play and leads into the next intent called wordOne. wordOne gets called anytime the user answers "yes", which happens 
+the very begining and after each word.once the user actually answers the word his answer is saved into the wordOneAnswerSlot value which
+helps find this value later and this is what is used to call on the next wordOneAnswer intent. Additionally Alexa required a custom slot 
+type to be made which is just filled with all the words placed into the array in which the words to scramble are choosen from. 
