@@ -14,7 +14,7 @@ const SKILL_NAME = 'Word Scrambler';
 const GET_FACT_MESSAGE = "Here's your word scramble: ";
 const HELP_MESSAGE = 'Your weird?';
 const HELP_REPROMPT = 'Your not smart?';
-const STOP_MESSAGE = 'I am sorry to see you leave so soon!';
+const STOP_MESSAGE = 'I am sorry to see you leave so soon! I bid you farwell!';
 
 //Global variables used to throught code for the word scramble!
 var scramble = ['snake', 'pie', 'jungle', 'ice', 'hello', 'soup', 'codiva', "ham", 'hard', 'mars', 'complicated', 'supercalifragilisticexpialidocious', 'conner', 'rear', 'astonishing', 'link', 'correspondence', 'disappointment'];
