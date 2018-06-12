@@ -1,40 +1,22 @@
-/* eslint-disable  func-names */
-/* eslint quote-props: ["error", "consistent"]*/
-/**
- * This sample demonstrates a simple skill built with the Amazon Alexa Skills
- * nodejs skill development kit.
- * This sample supports multiple lauguages. (en-US, en-GB, de-DE).
- * The Intent Schema, Custom Slots and Sample Utterances for this skill, as well
- * as testing instructions are located at https://github.com/alexa/skill-sample-nodejs-fact
- **/
-
 'use strict';
 const Alexa = require('alexa-sdk');
 
-//=========================================================================================================================================
-//TODO: The items below this comment need your attention.
-//=========================================================================================================================================
-
-//Replace with your app ID (OPTIONAL).  You can find this value at the top of your skill's page on http://developer.amazon.com.
-//Make sure to enclose your value in quotes, like this: const APP_ID = 'amzn1.ask.skill.bb4045e6-b3e8-4133-b650-72923c5980f1';
+//variables for handler methods. 
 const APP_ID = undefined;
+const SKILL_NAME = 'Word Scrambler';
+const GET_FACT_MESSAGE = "Here's your word scramble: ";
+const HELP_MESSAGE = 'Your weird?';
+const HELP_REPROMPT = 'Your not smart?';
+const STOP_MESSAGE = 'I am sorry to see you leave so soon!';
 
-const SKILL_NAME = 'Space Facts';
-const GET_FACT_MESSAGE = "Here's your fact: ";
-const HELP_MESSAGE = 'You can say tell me a space fact, or, you can say exit... What can I help you with?';
-const HELP_REPROMPT = 'What can I help you with?';
-const STOP_MESSAGE = 'Goodbye!';
-
+//Global variables used to throught code for the word scramble!
 var scramble = ['snake', 'pie', 'jungle', 'ice', 'hello', 'soup', 'codiva', "ham", 'hard', 'mars', 'complicated', 'supercalifragilisticexpialidocious', 'conner', 'rear', 'astonishing', 'link', 'correspondence', 'disappointment'];
-
 var wordDone = []; 
 var userScore = 0;
 var compScore = 0;
 var index = 0;
-//=========================================================================================================================================
-//Editing anything below this line might break your skill.
-//=========================================================================================================================================
 
+//Handelers to catch errors in Alexa and handel certain types of responses
 var handlers = {
   'LaunchRequest': function () {
       this.emit(':tell',  'No intent by that name'); 
@@ -54,47 +36,64 @@ var handlers = {
         this.emit(':responseReady');
     },
     
-    
+//This function acts as the introIntent and asks the user if they are ready to play and describes the game incase the user 
+//is unaware how to play.
  'Play': function () {
+    //resets variables for replayability.
     userScore = 0;
     compScore = 0;
     index = 0;
     wordDone = [];
+    //sets up the response for explaining how to play!
     this.response.speak("Ok lets play the game you have to get three words correct, " +
     "if you get three wrong I win, if you do get them I lose! Are you ready for word one?")
     .listen("you are taking to long to respond!");
     this.emit(':responseReady');
     },
  'wordOne': function() {
+    //sets up local variables and scrambleWordIndex uses the random JS class in Math. This ensures that a random word 
+    //is chosen by the comp each time.
     var wordOne = '';
     var scrambleWordIndex = scramble[Math.floor(Math.random() * scramble.length)];
+    //this pushes the array wordDone over one and adds to it like the arraylist class in Java.
     wordDone.push(scrambleWordIndex);
+    //this sends the scrambleWordIndex var into the scramble method which will return a array of scrambled letters from 
+    //the word.
     wordOne = ScrambleWord(scrambleWordIndex);
+    //This section of 'wordOne' tells the user what the scramble letters are so they can guess them
     this.response.speak('your scramble letters are ' + wordOne)
     .listen("sorry you have timed out thanks for playing");
     this.emit(':responseReady');
  },
  'wordOneAnswer' : function() {
+     //This lets the var quest = to the users answer and then sends it into the checkUserAnswer method to see if it was
+     //right or wrong.
      let quest = checkUserAnswer(this.event.request.intent.slots.wordOneAnswerSlot.value);
+     //checks to see what the score is and if the game is over tells the user acceptably and gives them 
+     //the option to play again.
      if (checkScore() == 1){
          this.response.speak("Congratulations, you won! Please challenge me again soon! The final score was Alexa " + compScore +
-         ' to your score of ' + userScore + '!').listen("sorry you have timed out thanks for playing");
+         ' to your score of ' + userScore + ' say lets play again to play again otherwise say stop!').listen("sorry you have timed out thanks for playing");
          index++;
      }
      else if(checkScore() == 2){
          this.response.speak("Better luck next time! Please challenge me again soon! The final score was Alexa " + compScore +
-         ' to your score of ' + userScore + '!').listen("sorry you have timed out thanks for playing");
+         ' to your score of ' + userScore + ' say lets play again to play again otherwise say stop!').listen("sorry you have timed out thanks for playing");
          index++;
      }
      else if(checkScore() == 0){
-        this.response.speak('the word was ' + wordDone[index] +' that was ' + quest + 'the score is now Alexa ' + compScore + ' to your score of ' + userScore + 
+        this.response.speak('the word was ' + wordDone[index] + ' that was ' + quest + 'the score is now Alexa ' + compScore + ' to your score of ' + userScore + 
         ' ready to continue?').listen("sorry you have timed out thanks for playing");
         index++;
      }
+     //says one of the built responses to the user!
      this.emit(':responseReady');
   },
 };
 
+//this function is sent a word(string) from the wordOne intent (scrambleWordIndex variable) this will take the word
+//and split up the letters into an array of strings holding single letters
+//if the word sent in was "example" it would call the random class and send in ["E","x","a","m","p","l","e"]
 function ScrambleWord(word) {
   var wordString = [];
   var ans = [];
@@ -106,6 +105,9 @@ function ScrambleWord(word) {
   return ans;
 }
 
+//this takes in the aforemntioned array of strings and randomizes where each letter will sit in the array
+//so the example would become {"m","E","a","e","x","l","p"]. This returns the previous array into the 
+//wordOne to spit out to the user.
 function Randomize(word){
     var randomNum;
     var letter = '';
@@ -118,6 +120,9 @@ function Randomize(word){
     return word;
 }
 
+//this method takes in the answer that was declared in the answers slot and compares it to the string stored in 
+//the wordDone array which held a string that was the word scrambled for the user. and returns a string 
+//'correct' or 'incorrect' to tell the user.
 function checkUserAnswer(answer){
     let quest = 'error with quest var';
     let hold = wordDone[index];
@@ -132,6 +137,7 @@ function checkUserAnswer(answer){
     return quest;
 }
 
+//this function checks the score to tell alexa what to respond
 function checkScore(){
     if(userScore >= 3)
         return 1;
@@ -140,7 +146,7 @@ function checkScore(){
     return 0;
 }
 
-
+//this handeler is required to communicate with alexa.
 exports.handler = function (event, context, callback) {
     const alexa = Alexa.handler(event, context, callback);
     alexa.APP_ID = APP_ID;
