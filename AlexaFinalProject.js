@@ -84,7 +84,7 @@ var handlers = {
          index++;
      }
      else if(checkScore() == 2){
-         this.response.speak("Better luck next time! Please challenge me again soon! The final score was Alexa " + compScore +
+         this.response.speak("Better luck next time! That last word was " + wordDone[index] + "Please challenge me again soon! The final score was Alexa " + compScore +
          ' to your score of ' + userScore + ' say lets play again to play again otherwise say stop!').listen("sorry you have timed out thanks for playing");
          index++;
      }
