@@ -28,7 +28,9 @@ const STOP_MESSAGE = 'Goodbye!';
 var scramble = ['snake', 'pie', 'jungle', 'ice', 'hello', 'soup', 'codiva', "ham", 'hard', 'mars', 'complicated', 'supercalifragilisticexpialidocious', 'conner', 'rear', 'astonishing', 'link', 'correspondence', 'disappointment'];
 
 var wordDone = []; 
-var userScore = 0, compScore = 0, index = 0;
+var userScore = 0;
+var compScore = 0;
+var index = 0;
 //=========================================================================================================================================
 //Editing anything below this line might break your skill.
 //=========================================================================================================================================
@@ -54,8 +56,12 @@ var handlers = {
     
     
  'Play': function () {
-    this.response.speak("Ok lets play the game you have three guesses to get the word, " +
-    "if you dont guess it I win, if you do guess it I lose! Are you ready for word one?")
+    userScore = 0;
+    compScore = 0;
+    index = 0;
+    wordDone = [];
+    this.response.speak("Ok lets play the game you have to get three words correct, " +
+    "if you get three wrong I win, if you do get them I lose! Are you ready for word one?")
     .listen("you are taking to long to respond!");
     this.emit(':responseReady');
     },
@@ -71,19 +77,22 @@ var handlers = {
  'wordOneAnswer' : function() {
      let quest = checkUserAnswer(this.event.request.intent.slots.wordOneAnswerSlot.value);
      if (checkScore() == 1){
-         this.response.speak("Congradulations, you won! Please challenge me again soon! The final score was Alexa " + compScore +
+         this.response.speak("Congratulations, you won! Please challenge me again soon! The final score was Alexa " + compScore +
          ' to your score of ' + userScore + '!').listen("sorry you have timed out thanks for playing");
+         index++;
      }
      else if(checkScore() == 2){
          this.response.speak("Better luck next time! Please challenge me again soon! The final score was Alexa " + compScore +
          ' to your score of ' + userScore + '!').listen("sorry you have timed out thanks for playing");
+         index++;
      }
      else if(checkScore() == 0){
-        this.response.speak('that was ' + quest + 'the score is now Alexa ' + compScore + ' to your score of ' + userScore + 
+        this.response.speak('the word was ' + wordDone[index] +' that was ' + quest + 'the score is now Alexa ' + compScore + ' to your score of ' + userScore + 
         ' ready to continue?').listen("sorry you have timed out thanks for playing");
+        index++;
      }
      this.emit(':responseReady');
-  }
+  },
 };
 
 function ScrambleWord(word) {
@@ -120,7 +129,6 @@ function checkUserAnswer(answer){
          compScore ++;
         quest = 'incorrect ';
     }
-    index ++;
     return quest;
 }
 
