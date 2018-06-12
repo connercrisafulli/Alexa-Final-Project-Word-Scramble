@@ -14,7 +14,7 @@ const SKILL_NAME = 'Word Scrambler';
 const GET_FACT_MESSAGE = "Here's your word scramble: ";
 const HELP_MESSAGE = 'Your weird?';
 const HELP_REPROMPT = 'Your not smart?';
-const STOP_MESSAGE = 'I am sorry to see you leave so soon! I bid you farwell!';
+const STOP_MESSAGE = 'I am sorry to see you leave so soon! I bid you farewell!';
 
 //Global variables used to throught code for the word scramble!
 var scramble = ['snake', 'pie', 'jungle', 'ice', 'hello', 'soup', 'codiva', "ham", 'hard', 'mars', 'complicated', 'supercalifragilisticexpialidocious', 'conner', 'rear', 'astonishing', 'link', 'correspondence', 'disappointment'];
@@ -89,8 +89,8 @@ var handlers = {
          index++;
      }
      else if(checkScore() == 0){
-        this.response.speak('the word was ' + wordDone[index] + ' that was ' + quest + 'the score is now Alexa ' + compScore + ' to your score of ' + userScore + 
-        ' ready to continue?').listen("sorry you have timed out thanks for playing");
+        this.response.speak('the word was ' + wordDone[index] + ', that was ' + quest + ', the score is now Alexa ' + compScore + ' to your score of ' + userScore + 
+        ', ready to continue?').listen("sorry you have timed out thanks for playing");
         index++;
      }
      //says one of the built responses to the user!
