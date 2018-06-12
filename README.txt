@@ -1,4 +1,4 @@
-# Alexa-Final-Project
+# Alexa-Final-Project-README
 
 This alexa skill is defined to play a word scramble game with the user! 
 
