@@ -103,8 +103,13 @@ var handlers = {
   //this function can be invoked by the user and gives them one hint (the word) at wordDone[index]. Then the user will guess the word
   //and hints left will because decrease they only get one.
   'hints': function(){
-      this.response.speak('you have ' + (hintLeft - 1) + ' hints left, the word is, ' + wordDone[index]).listen("Should I dial 911, you stopped responding");
+      if (hintLeft == 1)
+      {
+       this.response.speak('you have ' + (hintLeft - 1) + ' hints left, the word is, ' + wordDone[index]).listen("Should I dial 911, you stopped responding");
       hintLeft--;
+      }
+      else
+        this.response.speak('your out of hints, ready to continue?').listen("Should I dial 911, you stopped responding")
       this.emit(':responseReady');
   },
   
