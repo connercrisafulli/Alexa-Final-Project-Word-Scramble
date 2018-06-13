@@ -104,6 +104,12 @@ var handlers = {
       this.response.speak('you have ' + (hintLeft - 1) + ' hints left, the word is, ' + wordDone[index]).listen(STOP_MESSAGE);
       hintLeft--;
       this.emit(':responseReady');
+  },
+  
+  //this next bit of code is an easter egg that allows my name, the creator to get credit.
+  'creator': function(){
+      this.response.speak("Conner Crisafulli, ready to continue?")
+      this.emit(':responseReady');
   }
 };
 
