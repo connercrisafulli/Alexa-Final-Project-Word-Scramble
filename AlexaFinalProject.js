@@ -5,13 +5,6 @@
 //12 June 2018
 //************************************************************************************************************************************
 
-//************************************************************************************************************************************
-//Conner Crisafulli
-//Alexa-Final-Project-Skill-Word-Scramble
-//Teacher-Mrs. Sellers
-//12 June 2018
-//************************************************************************************************************************************
-
 'use strict';
 const Alexa = require('alexa-sdk');
 
@@ -22,16 +15,13 @@ const GET_FACT_MESSAGE = "Here's your word scramble: ";
 const HELP_MESSAGE = 'You can say yes to move on, or ask for a hint, or say stop to quit and let me serenade you!';
 const HELP_REPROMPT = 'Your not smart?';
 //funny response to stop message
-const STOP_MESSAGE = 'I am sorry to see you leave so soon! I bid you farewell! I just have to say   ' +
+const STOP_MESSAGE = 'I am sorry to see you leave so soon! I bid you farewell! I just have to say,   ' +
 'Baby come back, listen baby, you can blame it all on me, I was wrong, and I just cant live without you, I was wrong, and I just cant live';
 
 //Global variables used to throught code for the word scramble!
 var scramble = ['snake', 'pie', 'jungle', 'ice', 'hello', 'soup', 'codiva', "ham", 'hard', 'mars', 'complicated', 'supercalifragilisticexpialidocious', 'conner', 'rear', 'astonishing', 'link', 'correspondence', 'disappointment'];
-var wordDone = []; 
-var userScore = 0;
-var compScore = 0;
-var index = 0;
-var hintLeft = 1;
+//put all variables oin one line to reduce and save whitespace. 
+var wordDone = [], userScore = 0, compScore = 0, index = 0, hintLeft = 1, userInput;
 
 //Handelers to catch errors in Alexa and handel certain types of responses
 var handlers = {
@@ -85,7 +75,8 @@ var handlers = {
  'wordOneAnswer' : function() {
      //This lets the var quest = to the users answer and then sends it into the checkUserAnswer method to see if it was
      //right or wrong.
-     let quest = checkUserAnswer(this.event.request.intent.slots.wordOneAnswerSlot.value);
+     userInput = this.event.request.intent.slots.wordOneAnswerSlot.value;
+     let quest = checkUserAnswer(userInput);
      //checks to see what the score is and if the game is over tells the user acceptably and gives them 
      //the option to play again.
      if (checkScore() == 1){
@@ -99,7 +90,7 @@ var handlers = {
          index++;
      }
      else if(checkScore() == 0){
-        this.response.speak('the word was ' + wordDone[index] + ', that was ' + quest + ', the score is now Alexa ' + compScore + ' to your score of ' + userScore + 
+        this.response.speak('the word was ' + wordDone[index] + ', and you said, ' + userInput +  ', that was ' + quest + ', the score is now Alexa ' + compScore + ' to your score of ' + userScore + 
         ', ready to continue?').listen(STOP_MESSAGE);
         index++;
      }
