@@ -17,6 +17,7 @@ const HELP_REPROMPT = 'Your not smart?';
 //funny response to stop message
 const STOP_MESSAGE = 'I am sorry to see you leave so soon! I bid you farewell! I just have to say,   ' +
 'Baby come back, listen baby, you can blame it all on me, I was wrong, and I just cant live without you, I was wrong, and I just cant live';
+//used as a const because it never changes and never should have the ability to change no matterr what!
 const scramble = ['snake', 'pie', 'jungle', 'ice', 'hello', 'soup', 'codiva', "ham", 'hard', 'mars', 'complicated', 'supercalifragilisticexpialidocious', 'conner', 'rear', 'astonishing', 'link', 'correspondence', 'disappointment'];
 
 //Global variables used to throught code for the word scramble!
