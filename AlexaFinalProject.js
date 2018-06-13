@@ -5,6 +5,13 @@
 //12 June 2018
 //************************************************************************************************************************************
 
+//************************************************************************************************************************************
+//Conner Crisafulli
+//Alexa-Final-Project-Skill-Word-Scramble
+//Teacher-Mrs. Sellers
+//12 June 2018
+//************************************************************************************************************************************
+
 'use strict';
 const Alexa = require('alexa-sdk');
 
@@ -12,9 +19,11 @@ const Alexa = require('alexa-sdk');
 const APP_ID = undefined;
 const SKILL_NAME = 'Word Scrambler';
 const GET_FACT_MESSAGE = "Here's your word scramble: ";
-const HELP_MESSAGE = 'Your weird?';
+const HELP_MESSAGE = 'You can say yes to move on, or ask for a hint, or say stop to quit and let me serenade you!';
 const HELP_REPROMPT = 'Your not smart?';
-const STOP_MESSAGE = 'I am sorry to see you leave so soon! I bid you farewell!';
+//funny response to stop message
+const STOP_MESSAGE = 'I am sorry to see you leave so soon! I bid you farewell! I just have to say   ' +
+'Baby come back, listen baby, you can blame it all on me, I was wrong, and I just cant live without you, I was wrong, and I just cant live';
 
 //Global variables used to throught code for the word scramble!
 var scramble = ['snake', 'pie', 'jungle', 'ice', 'hello', 'soup', 'codiva', "ham", 'hard', 'mars', 'complicated', 'supercalifragilisticexpialidocious', 'conner', 'rear', 'astonishing', 'link', 'correspondence', 'disappointment'];
@@ -53,9 +62,9 @@ var handlers = {
     index = 0;
     wordDone = [];
     //sets up the response for explaining how to play!
-    this.response.speak("Ok lets play the game you have to get three words correct, " +
-    "if you get three wrong I win, if you do get them I lose! Are you ready for word one?")
-    .listen('AMAZON.StopIntent');
+    this.response.speak("Ok lets play the game, you have to get three words correct, " +
+    "if you get three words wrong I win, if you get them right I lose! Are you ready for word one?")
+    .listen(STOP_MESSAGE);
     this.emit(':responseReady');
     },
  'wordOne': function() {
@@ -70,7 +79,7 @@ var handlers = {
     wordOne = ScrambleWord(scrambleWordIndex);
     //This section of 'wordOne' tells the user what the scramble letters are so they can guess them
     this.response.speak('your scramble letters are ' + wordOne)
-    .listen('AMAZON.StopIntent');
+    .listen(STOP_MESSAGE);
     this.emit(':responseReady');
  },
  'wordOneAnswer' : function() {
@@ -81,17 +90,17 @@ var handlers = {
      //the option to play again.
      if (checkScore() == 1){
          this.response.speak("Congratulations, you won! Please challenge me again soon! The final score was Alexa " + compScore +
-         ' to your score of ' + userScore + ' say lets play again to play again otherwise say stop!').listen('AMAZON.StopIntent');
+         ', to your score of ' + userScore + ', say lets play again to play again, otherwise say stop!').listen(STOP_MESSAGE);
          index++;
      }
      else if(checkScore() == 2){
          this.response.speak("Better luck next time! That last word was " + wordDone[index] + "Please challenge me again soon! The final score was Alexa " + compScore +
-         ' to your score of ' + userScore + ' say lets play again to play again otherwise say stop!').listen('AMAZON.StopIntent');
+         ', to your score of ' + userScore + ', say lets play again to play again, otherwise say stop!').listen(STOP_MESSAGE);
          index++;
      }
      else if(checkScore() == 0){
         this.response.speak('the word was ' + wordDone[index] + ', that was ' + quest + ', the score is now Alexa ' + compScore + ' to your score of ' + userScore + 
-        ', ready to continue?').listen(this.emit('AMAZON.StopIntent');
+        ', ready to continue?').listen(STOP_MESSAGE);
         index++;
      }
      //says one of the built responses to the user!
@@ -101,7 +110,7 @@ var handlers = {
   //this function can be invoked by the user and gives them one hint (the word) at wordDone[index]. Then the user will guess the word
   //and hints left will because decrease they only get one.
   'hints': function(){
-      this.response.speak('you have ' + (hintLeft - 1) + ' hints left, the word is, ' + wordDone[index]).listen(this.emit('AMAZON.StopIntent');
+      this.response.speak('you have ' + (hintLeft - 1) + ' hints left, the word is, ' + wordDone[index]).listen(STOP_MESSAGE);
       hintLeft--;
       this.emit(':responseReady');
   }
