@@ -12,11 +12,12 @@ calls the next intent wordOneAnswer. This intent sends the users answer into a m
 at the particular index in the wordDone array and adds to the score accordingly. Next the wordOneAnswer intent runs a method which checks
 if the game is over and who one. Then it builds the alexa response accordingly and emits it to the user. If the user decieds to play again 
 they will prompt the first 'play' intent to fire. Also if the user uses the hint easter egg it will tell him the word and lower the number 
-of hints left by one.
+of hints left by one. There is also an easter egg which gives my name in the creator intent just for fun :)!
 
     In the Alexa developer side of things there are seven intents, four of which are built in handelers. The first play intent fires with 
 the user saying lets play and leads into the next intent called wordOne. wordOne gets called anytime the user answers "yes", which happens 
 the very begining and after each word.once the user actually answers the word his answer is saved into the wordOneAnswerSlot value which
 helps find this value later and this is what is used to call on the next wordOneAnswer intent. Additionally Alexa required a custom slot 
 type to be made which is just filled with all the words placed into the array in which the words to scramble are choosen from. 
-Additionally if the user says hint the 'hints' easter egg intent will be called. 
+Additionally if the user says hint the 'hints' easter egg intent will be called. Also, the last intent, which displays my name in fired
+by saying 'who made this amazing skill'!
