@@ -17,9 +17,9 @@ const HELP_REPROMPT = 'Your not smart?';
 //funny response to stop message
 const STOP_MESSAGE = 'I am sorry to see you leave so soon! I bid you farewell! I just have to say,   ' +
 'Baby come back, listen baby, you can blame it all on me, I was wrong, and I just cant live without you, I was wrong, and I just cant live';
+const scramble = ['snake', 'pie', 'jungle', 'ice', 'hello', 'soup', 'codiva', "ham", 'hard', 'mars', 'complicated', 'supercalifragilisticexpialidocious', 'conner', 'rear', 'astonishing', 'link', 'correspondence', 'disappointment'];
 
 //Global variables used to throught code for the word scramble!
-var scramble = ['snake', 'pie', 'jungle', 'ice', 'hello', 'soup', 'codiva', "ham", 'hard', 'mars', 'complicated', 'supercalifragilisticexpialidocious', 'conner', 'rear', 'astonishing', 'link', 'correspondence', 'disappointment'];
 //put all variables oin one line to reduce and save whitespace. 
 var wordDone = [], userScore = 0, compScore = 0, index = 0, hintLeft = 1, userInput;
 
@@ -31,7 +31,7 @@ var handlers = {
     'AMAZON.HelpIntent': function () {
         const speechOutput = HELP_MESSAGE;
 
-        this.response.speak(speechOutput).listen();
+        this.response.speak(speechOutput).listen("Should I dial 911, you stopped responding");
         this.emit(':responseReady');
     },
     'AMAZON.CancelIntent': function () {
@@ -54,7 +54,7 @@ var handlers = {
     //sets up the response for explaining how to play!
     this.response.speak("Ok lets play the game, you have to get three words correct, " +
     "if you get three words wrong I win, if you get them right I lose! Are you ready for word one?")
-    .listen(STOP_MESSAGE);
+    .listen("Should I dial 911, you stopped responding");
     this.emit(':responseReady');
     },
  'wordOne': function() {
@@ -69,7 +69,7 @@ var handlers = {
     wordOne = ScrambleWord(scrambleWordIndex);
     //This section of 'wordOne' tells the user what the scramble letters are so they can guess them
     this.response.speak('your scramble letters are ' + wordOne)
-    .listen(STOP_MESSAGE);
+    .listen("Should I dial 911, you stopped responding");
     this.emit(':responseReady');
  },
  'wordOneAnswer' : function() {
@@ -81,17 +81,17 @@ var handlers = {
      //the option to play again.
      if (checkScore() == 1){
          this.response.speak("Congratulations, you won! Please challenge me again soon! The final score was Alexa " + compScore +
-         ', to your score of ' + userScore + ', say lets play again to play again, otherwise say stop!').listen(STOP_MESSAGE);
+         ', to your score of ' + userScore + ', say lets play again to play again, otherwise say stop!').listen("Should I dial 911, you stopped responding");
          index++;
      }
      else if(checkScore() == 2){
          this.response.speak("Better luck next time! That last word was " + wordDone[index] + "Please challenge me again soon! The final score was Alexa " + compScore +
-         ', to your score of ' + userScore + ', say lets play again to play again, otherwise say stop!').listen(STOP_MESSAGE);
+         ', to your score of ' + userScore + ', say lets play again to play again, otherwise say stop!').listen("Should I dial 911, you stopped responding");
          index++;
      }
      else if(checkScore() == 0){
         this.response.speak('the word was ' + wordDone[index] + ', and you said, ' + userInput +  ', that was ' + quest + ', the score is now Alexa ' + compScore + ' to your score of ' + userScore + 
-        ', ready to continue?').listen(STOP_MESSAGE);
+        ', ready to continue?').listen("Should I dial 911, you stopped responding");
         index++;
      }
      //says one of the built responses to the user!
@@ -101,14 +101,14 @@ var handlers = {
   //this function can be invoked by the user and gives them one hint (the word) at wordDone[index]. Then the user will guess the word
   //and hints left will because decrease they only get one.
   'hints': function(){
-      this.response.speak('you have ' + (hintLeft - 1) + ' hints left, the word is, ' + wordDone[index]).listen(STOP_MESSAGE);
+      this.response.speak('you have ' + (hintLeft - 1) + ' hints left, the word is, ' + wordDone[index]).listen("Should I dial 911, you stopped responding");
       hintLeft--;
       this.emit(':responseReady');
   },
   
   //this next bit of code is an easter egg that allows my name, the creator to get credit.
   'creator': function(){
-      this.response.speak("Conner Crisafulli, ready to continue?")
+      this.response.speak("Conner Crisafulli, ready to continue?").listen("Should I dial 911, you stopped responding");
       this.emit(':responseReady');
   }
 };
