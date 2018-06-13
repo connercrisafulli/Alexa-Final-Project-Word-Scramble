@@ -12,3 +12,8 @@ the only other user input needed is the user's answer to unscramble the word and
 At the end Alexa will tell the user how to play again, say "lets play again", and if the user so chooses this will also be required of
 the user to say in order to keep the skill going. If at any point the user wishes to stop that is all they have to say, "stop", and 
 Alexa will proceed to say goodbye and and close the program.
+
+There also little easter eggs in the Alexa code if you say 'who made this amazing skill' Alexa will say the developers name. If you say no
+or stop at all the built in Stop Intent will bid you farewell and sing the end of 'Baby come back' to you. And if you need help it will 
+give great info after calling you not smart. Additionally, there is a hint system built in but yopu have to know to say hint to use it no
+where in the code tells you to say it. Hence Easter Eggs!
