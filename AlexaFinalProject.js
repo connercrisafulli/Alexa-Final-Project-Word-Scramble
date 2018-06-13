@@ -48,7 +48,7 @@ var handlers = {
 //is unaware how to play.
  'Play': function () {
     //resets variables for replayability.
-    hintLeft = 0;
+    hintLeft = 1;
     userScore = 0;
     compScore = 0;
     index = 0;
